@@ -1,0 +1,14 @@
+{
+	"session": {
+		"host": "ukwin-aor-w10.qliktech.com",
+	    "port": 4747,
+	    "prefix": "/ticket-proxy/",
+	    "unsecure": false,
+	    "route": "app/engineData",
+	    "disableCache": false
+	},
+	"user": {
+		"name": "aor@qlik.com",
+		"dir": "OFFICE365"
+	}
+}
