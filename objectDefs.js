@@ -46,7 +46,16 @@ module.exports = {
         };
     },
 
-    slideItem: function( vizType, snapshotId ) {
+    slideItem: function( vizType, snapshotId, position ) {
+
+        position = position || {
+            "top": "0",//"25.86%",
+            "left": "0",//"29.17%",
+            "width": "100%", // "35.42%",
+            "height": "100%", //"36.95%",
+            "z-index": 4
+        };
+
         return {
             "qInfo": {
                 "qType": "slideitem"
@@ -55,13 +64,7 @@ module.exports = {
             "title": "",
             "sheetId": "",
             "ratio": true,
-            "position": {
-                "top": "25.86%",
-                "left": "29.17%",
-                "width": "35.42%",
-                "height": "36.95%",
-                "z-index": 4
-            },
+            "position": position,
             "visualization": "snapshot",
             "visualizationType": vizType,
             "style": {
@@ -71,7 +74,6 @@ module.exports = {
     },
 
     bookmark: function( objectLayout, sheetId ) {
-
         var bookmark = _.extend({
             "qMetaDef": {
                 "title": objectLayout.title,
@@ -90,36 +92,47 @@ module.exports = {
             "object": {
                 "size": {
                     "w": 640,
-                    "h": 320
+                    "h": 400
                 }
             },
+            "rtl": false,
             "content": {
                 "chartData": {
                     "legendScrollOffset": 0,
                     "scrollOffset": 0,
-                    "discreteSpacing": 28.031456360866315,
                     "axisInnerOffset": 0,
                     "hasMiniChart": true,
-                    "viewRange": 4.95871
+                    //"discreteSpacing": 28.031456360866315,
+                    //"viewRange": 4.95871,
                 },
                 "size": {
                     "w": 640,
-                    "h": 320
+                    "h": 400
                 },
                 "v": 0.96
             },
-            "rtl": false,
             "parent": {
-                "w": 1028,
+                "w": 1280,
                 "h": 800
             }
         };
+
+        if ( objectLayout.qInfo.qType === 'scatterplot' ) {
+            bookmark.snapshotData.content.chartData = {
+                "xAxisMin": 0,
+                "xAxisMax": objectLayout.qHyperCube.qMeasureInfo[0].qMax * (1.1), //length x-axis
+                "yAxisMin": 0,
+                "yAxisMax": objectLayout.qHyperCube.qMeasureInfo[1].qMax * (1.1) //length y-axis
+            }
+        }
 
         delete bookmark.qExtendsId;
 
         bookmark.qInfo = {
             "qType": "snapshot"
         };
+
+        //console.log(JSON.stringify(bookmark));
 
         return bookmark;
     }

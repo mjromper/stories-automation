@@ -80,7 +80,17 @@ function prepareSelection(appId, fieldName, selectPos, callback) {
 
 function getObjectLayout(app, objectId) {
     return app.getObject(objectId).then(function(o) {
-        return o.getLayout();
+        return o.getLayout().then( function( layout ) {
+            if ( layout.qInfo.qType === 'scatterplot') {
+                var qPages = [ {"qLeft": 0, "qTop": 0, "qWidth": layout.qHyperCube.qSize.qcx, "qHeight": layout.qHyperCube.qSize.qcy} ];
+                return o.getHyperCubeData( "/qHyperCubeDef", qPages ).then( function(dataPages) {
+                    layout.qHyperCube.qDataPages = dataPages;
+                    return layout;
+                });
+            } else {
+                return layout;
+            }
+        } );
     });
 }
 
