@@ -88,6 +88,8 @@ module.exports = {
             "isClone": false
         }, objectLayout);
 
+        bookmark.title = "My title";
+
         bookmark.snapshotData = {
             "object": {
                 "size": {
