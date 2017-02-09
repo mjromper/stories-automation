@@ -10,9 +10,10 @@ var fieldName = 'dim_device_app_combo',
 
 var loopThroughSelections = function( positions ) {
 	var p = Q();
+	var storyName = "Story_Test_"+Math.round(Math.random()*100);
 	positions.forEach(function(pos) {
-	    p = p.then(function(){
-	      	return sense.prepareSelection( appId, fieldName, pos, "MyStoryName_pos_"+pos, sheetId, objectId )
+	    p = p.then(function() {
+	      	return sense.prepareSelection( appId, fieldName, pos, storyName+" ("+pos+")", sheetId, objectId )
 	    });
 	} );
 	return p;
